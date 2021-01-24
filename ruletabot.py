@@ -7,12 +7,18 @@ from discord.ext import commands
 
 # Libraries (Python 3.7.4)
 import os
-from random import sample
+from random import sample, choice
 from time import sleep
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
+IMAGES = os.getenv('IMAGES')
 bot = commands.Bot(command_prefix='$')
+
+def random_quote():
+    with open('assets/quotes.txt', 'r') as f:
+        lines = [line.rstrip() for line in f]
+        return choice(lines)
 
 @bot.event
 async def on_ready():
@@ -20,6 +26,7 @@ async def on_ready():
 
 @bot.event
 async def on_command_error(ctx, error):
+    print(error)
     if isinstance(error, discord.ext.commands.errors.CommandNotFound):
         await ctx.send("That command wasn't found! Sorry :(")
     elif isinstance(error, discord.ext.commands.errors.BadArgument):
@@ -60,8 +67,11 @@ async def roulette(ctx, n:int):
             text_channel = get_channel(ctx.guild)
             for lucky in lucky_bastards:
                 if text_channel:
-                    # Enviar Gif tambien
-                    await text_channel.send(f"{lucky.display_name} {today}")
+                    files = os.listdir(IMAGES)
+                    image = choice(files)
+                    image_file = discord.File(IMAGES + "/" + image)
+                    quote = random_quote()
+                    await text_channel.send(f"{lucky.display_name} {today} \n {quote}", file=image_file)
                 await lucky.move_to(None, reason="Unlucky")
             await vc.disconnect()
         else:
