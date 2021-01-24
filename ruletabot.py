@@ -1,6 +1,6 @@
 # External libraries
-# Pickle, PyNaCl, dotenv, ffmpeg, discord, datetime
-import pickle, ffmpeg, discord
+# Pickle, PyNaCl, dotenv, discord, datetime
+import pickle, discord
 from datetime import date
 from dotenv import load_dotenv
 from discord.ext import commands
