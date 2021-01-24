@@ -4,6 +4,8 @@ import pickle, discord
 from datetime import date
 from dotenv import load_dotenv
 from discord.ext import commands
+import ctypes
+import ctypes.util
 
 # Libraries (Python 3.7.4)
 import os
@@ -11,10 +13,16 @@ from random import sample, choice
 from time import sleep
 
 load_dotenv()
-discord.opus.load_opus()
 TOKEN = os.getenv('DISCORD_TOKEN')
 IMAGES = os.getenv('IMAGES')
 bot = commands.Bot(command_prefix='$')
+
+if not discord.opus.is_loaded():
+    print("ctypes - Find opus:")
+    a = ctypes.util.find_library('opus')
+    print("Discord - Load Opus:")
+    discord.opus.load_opus(a)
+    print("Discord - Is loaded:")
 
 def random_quote():
     with open('assets/quotes.txt', 'r') as f:
