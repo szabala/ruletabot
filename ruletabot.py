@@ -11,6 +11,7 @@ from random import sample, choice
 from time import sleep
 
 load_dotenv()
+discord.opus.load_opus()
 TOKEN = os.getenv('DISCORD_TOKEN')
 IMAGES = os.getenv('IMAGES')
 bot = commands.Bot(command_prefix='$')
