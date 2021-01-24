@@ -60,7 +60,7 @@ async def roulette(ctx, n:int):
         if len(channel.members) >= n:
             lucky_bastards = sample(channel.members, n)
             vc = await channel.connect()
-            vc.play(discord.FFmpegPCMAudio(source='assets/wof.mp3',executable="ffmpeg/ffmpeg.exe"))
+            vc.play(discord.FFmpegPCMAudio(source='assets/wof.mp3'))
             while vc.is_playing():
                     sleep(.1)
             today = date.today().strftime("%d-%m-%Y")
