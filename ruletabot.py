@@ -40,6 +40,8 @@ async def on_command_error(ctx, error):
         await ctx.send("That command wasn't found! Sorry :(")
     elif isinstance(error, discord.ext.commands.errors.BadArgument):
         await ctx.send("Wrong parameter for this command")
+    elif isinstance(error, discord.ext.commands.errors.CommandOnCooldown):
+        await ctx.send("You can only use the roulette once every 12 hours, you cheeky bastard")
     else:
         await ctx.send("Error 404, pls send help this is not a joke")
 
@@ -62,8 +64,8 @@ async def set_text(ctx, channel_name):
 
 
 @bot.command(name="roulette", help="Gracefully kicks out a number n of people in the current channel.")
+@commands.cooldown(1, 43200, commands.BucketType.user)
 async def roulette(ctx, n:int):
-
     if ctx.author.voice and ctx.author.voice.channel:
         channel = ctx.author.voice.channel
         if len(channel.members) >= n:
