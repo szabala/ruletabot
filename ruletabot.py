@@ -82,7 +82,7 @@ async def roulette(ctx, n:int):
                     image = choice(files)
                     image_file = discord.File(IMAGES + "/" + image)
                     quote = random_quote()
-                    await text_channel.send(f"{lucky.display_name} {today} \n {quote}", file=image_file)
+                    await text_channel.send(f"{lucky.mention} {today} \n {quote}", file=image_file)
                 await lucky.move_to(None, reason="Unlucky")
             await vc.disconnect()
         else:
